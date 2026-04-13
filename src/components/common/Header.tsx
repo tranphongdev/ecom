@@ -3,14 +3,15 @@ import { Link, useNavigate } from 'react-router-dom'
 import { useDebounce } from '~/hooks/useDebounce'
 import { Search, ShoppingCart, Phone, MapPin, HardDrive, Newspaper, CircleUserRound } from 'lucide-react'
 import { Badge, Button, Popover } from 'antd'
-import { useStore } from '~/store'
+import { useCartStore, useAuthStore } from '~/store'
 import { MOCK_PRODUCTS } from '~/data/mockData'
 
 export default function Header() {
   const navigate = useNavigate()
-  const { cart, isAuthenticated, user } = useStore((state) => state)
-  const cartItemCount = cart.reduce((acc, item) => acc + item.quantity, 0)
-  const cartTotal = cart.reduce((acc, item) => acc + item.price * item.quantity, 0)
+  const cartItems = useCartStore((state) => state.items)
+  const { isAuthenticated, user } = useAuthStore()
+  const cartItemCount = cartItems.reduce((acc, item) => acc + item.quantity, 0)
+  const cartTotal = cartItems.reduce((acc, item) => acc + item.price * item.quantity, 0)
 
   const [searchTerm, setSearchTerm] = useState('')
   const debouncedTerm = useDebounce(searchTerm, 500)
@@ -38,10 +39,10 @@ export default function Header() {
         <div className='container mx-auto px-4 max-w-[1240px] h-10 flex items-center justify-center text-white relative group'>
           {/* We simulate the banner text since it's just raw text in the mockup */}
           <div className='flex items-center gap-4 group-hover:scale-105 transition-transform'>
-            <span className='font-black text-[18px] md:text-[22px] tracking-wide uppercase drop-shadow-sm'>
+            <span className='font-black text-lg md:text-xl tracking-wide uppercase drop-shadow-sm'>
               TRANPHONGPC - GIẢI PHÁP MÁY TÍNH HÀNG ĐẦU
             </span>
-            <span className='bg-white text-[#031d74] px-4 py-0.5 text-[15px] font-black uppercase rounded shadow-sm'>
+            <span className='bg-white text-[#031d74] px-2 py-0.5 text-sm md:text-base font-black uppercase rounded shadow-sm'>
               MUA NGAY
             </span>
           </div>
@@ -179,10 +180,10 @@ export default function Header() {
                 placement='bottomRight'
                 content={
                   <div className='w-[400px] bg-white text-gray-800 cursor-default'>
-                    {cart.length > 0 ? (
+                    {cartItems.length > 0 ? (
                       <>
                         <div className='max-h-[300px] overflow-y-auto custom-scrollbar p-1'>
-                          {cart.map((item) => (
+                          {cartItems.map((item) => (
                             <div
                               key={item.id}
                               className='flex gap-3 p-3 border-b border-gray-100 last:border-0 hover:bg-gray-50 transition'

@@ -2,13 +2,13 @@ import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { Button, Input, Form, message } from 'antd'
 import { User, Lock, ArrowLeft } from 'lucide-react'
-import { useStore } from '../store'
+import { useAuthStore } from '~/store'
 import type { UserProfile } from '~/types'
 
 export default function Login() {
   const navigate = useNavigate()
   const [loading, setLoading] = useState(false)
-  const login = useStore((state) => state.login)
+  const login = useAuthStore((state) => state.login)
 
   const onFinish = (values: UserProfile) => {
     setLoading(true)
@@ -82,7 +82,6 @@ export default function Login() {
                 type='primary'
                 htmlType='submit'
                 loading={loading}
-                className='w-full h-12 bg-primary hover:bg-red-700 rounded-lg text-base font-bold shadow-md hover:shadow-lg transition-all'
               >
                 Đăng Nhập
               </Button>

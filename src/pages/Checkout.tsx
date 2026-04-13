@@ -4,7 +4,7 @@ import { Breadcrumb, Form, Input, AutoComplete, Button, Radio, Result, Checkbox 
 import { useQuery } from '@tanstack/react-query'
 import axios from 'axios'
 import { useDebounce } from '~/hooks/useDebounce'
-import { useStore } from '~/store'
+import { useCartStore } from '~/store'
 
 interface LocationData {
   name: string
@@ -41,7 +41,7 @@ export default function Checkout() {
     enabled: !!selectedCityCode
   })
 
-  const { cart, clearCart } = useStore()
+  const { items: cart, clearItems: clearCart } = useCartStore()
   const [paymentMethod, setPaymentMethod] = useState('cod')
   const [showInvoice, setShowInvoice] = useState(false)
   const [orderPlaced, setOrderPlaced] = useState(false)

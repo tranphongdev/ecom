@@ -1,10 +1,10 @@
 import { Link } from 'react-router-dom'
 import { Empty, message, Button } from 'antd'
 import { Trash2, ChevronLeft } from 'lucide-react'
-import { useStore } from '../store'
+import { useCartStore } from '~/store'
 
 export default function Cart() {
-  const { cart, updateQuantity, removeFromCart, clearCart } = useStore()
+  const { items: cart, updateItemQuantity: updateQuantity, removeItem: removeFromCart, clearItems: clearCart } = useCartStore()
 
   if (cart.length === 0) {
     return (

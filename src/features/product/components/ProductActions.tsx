@@ -2,7 +2,7 @@ import { ShoppingCart } from 'lucide-react'
 import { message } from 'antd'
 import { useNavigate } from 'react-router-dom'
 import type { Product } from '~/types'
-import { useStore } from '~/store'
+import { useCartStore } from '~/store'
 
 interface ProductActionsProps {
   product: Product
@@ -12,7 +12,7 @@ interface ProductActionsProps {
 }
 
 export default function ProductActions({ product, quantity, setQuantity, activeImage }: ProductActionsProps) {
-  const addToCart = useStore((state) => state.addToCart)
+  const addToCart = useCartStore((state) => state.addItem)
   const navigate = useNavigate()
 
   const handleAddToCart = (redirect: boolean) => {

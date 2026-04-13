@@ -1,12 +1,12 @@
 import { Link, useNavigate } from 'react-router-dom'
 import { Breadcrumb, Form, Input, Select, message, Table, Tag, Button, Tabs } from 'antd'
 import { User, FileText, Lock, LogOut } from 'lucide-react'
-import { useStore } from '../store'
+import { useAuthStore } from '~/store'
 import { useTranslation } from 'react-i18next'
 
 export default function Dashboard() {
   const navigate = useNavigate()
-  const { user, logout } = useStore()
+  const { user, logout } = useAuthStore()
   const { t, i18n } = useTranslation()
 
   const handleLogout = (e: React.MouseEvent) => {

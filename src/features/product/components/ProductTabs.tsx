@@ -29,7 +29,7 @@ export default function ProductTabs({ product }: ProductTabsProps) {
                 <Play className='text-white fill-white ml-1' size={24} />
               </div>
             </div>
-            <div className='absolute top-0 left-0 right-0 p-4 bg-gradient-to-b from-black/80 to-transparent text-white font-medium text-[15px] flex items-center gap-3'>
+            <div className='absolute top-0 left-0 right-0 p-4 bg-linear-to-b from-black/80 to-transparent text-white font-medium text-[15px] flex items-center gap-3'>
               <div className='w-8 h-8 rounded-full bg-white text-black flex items-center justify-center text-xs font-bold'>
                 RP
               </div>
