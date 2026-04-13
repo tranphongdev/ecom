@@ -1,0 +1,20 @@
+{
+  "profile": {
+    "title": "Tài khoản",
+    "updateInfo": "Cập nhật thông tin cá nhân",
+    "fullName": "Họ tên",
+    "email": "Email",
+    "address": "Địa chỉ nhà",
+    "city": "Tỉnh/Thành Phố",
+    "selectCity": "Chọn Tỉnh / Thành phố",
+    "hanoi": "Hà Nội",
+    "hcm": "Hồ Chí Minh",
+    "homePhone": "Điện thoại cố định",
+    "mobilePhone": "Điện thoại di động",
+    "language": "Ngôn ngữ",
+    "save": "THAY ĐỔI",
+    "logout": "Đăng xuất",
+    "ordersTitle": "Quản lý đơn hàng",
+    "passwordTitle": "Thay đổi mật khẩu"
+  }
+}
