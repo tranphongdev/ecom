@@ -1,4 +1,5 @@
 import { create } from 'zustand'
+import { persist } from 'zustand/middleware'
 import type { UserProfile } from '~/types'
 
 interface AuthState {
@@ -13,10 +14,15 @@ interface AuthActions {
 
 export type AuthStore = AuthState & AuthActions
 
-export const useAuthStore = create<AuthStore>((set) => ({
-  isAuthenticated: false,
-  user: null,
+export const useAuthStore = create<AuthStore>()(
+  persist(
+    (set) => ({
+      isAuthenticated: false,
+      user: null,
 
-  login: (userData) => set({ isAuthenticated: true, user: userData }),
-  logout: () => set({ isAuthenticated: false, user: null })
-}))
+      login: (userData) => set({ isAuthenticated: true, user: userData }),
+      logout: () => set({ isAuthenticated: false, user: null })
+    }),
+    { name: 'tranphongpc-auth' }
+  )
+)

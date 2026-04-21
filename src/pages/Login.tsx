@@ -14,6 +14,7 @@ export default function Login() {
     setLoading(true)
     setTimeout(() => {
       login({
+        id: crypto.randomUUID(),
         name: 'Tran Dinh Phong',
         email: values.email || 'phongtd.bhsoft@gmail.com',
         role: 'Khách hàng'
@@ -82,6 +83,7 @@ export default function Login() {
                 type='primary'
                 htmlType='submit'
                 loading={loading}
+                className='w-full h-12 text-sm'
               >
                 Đăng Nhập
               </Button>

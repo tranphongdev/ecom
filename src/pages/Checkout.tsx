@@ -1,15 +1,9 @@
 import { useState } from 'react'
 import { useNavigate, Link } from 'react-router-dom'
 import { Breadcrumb, Form, Input, AutoComplete, Button, Radio, Result, Checkbox } from 'antd'
-import { useQuery } from '@tanstack/react-query'
-import axios from 'axios'
 import { useDebounce } from '~/hooks/useDebounce'
 import { useCartStore } from '~/store'
-
-interface LocationData {
-  name: string
-  code: number
-}
+import { useProvinces, useDistricts } from '~/hooks/useLocation'
 
 export default function Checkout() {
   const navigate = useNavigate()
@@ -21,25 +15,12 @@ export default function Checkout() {
   const selectedCityName = useDebounce(selectedCityNameRaw, 300)
   const selectedDistrictName = useDebounce(selectedDistrictNameRaw, 300)
 
-  const { data: provinces, isLoading: loadingProvinces } = useQuery<LocationData[]>({
-    queryKey: ['provinces'],
-    queryFn: async () => {
-      const { data } = await axios.get('https://provinces.open-api.vn/api/p/')
-      return data.sort((a: LocationData, b: LocationData) => a.name.localeCompare(b.name))
-    }
-  })
+  const { data: provinces, isLoading: loadingProvinces } = useProvinces()
 
   const selectedCityObj = provinces?.find((p) => p.name === selectedCityName)
   const selectedCityCode = selectedCityObj?.code
 
-  const { data: districts, isLoading: loadingDistricts } = useQuery<LocationData[]>({
-    queryKey: ['districts', selectedCityCode],
-    queryFn: async () => {
-      const { data } = await axios.get(`https://provinces.open-api.vn/api/p/${selectedCityCode}?depth=2`)
-      return data.districts.sort((a: LocationData, b: LocationData) => a.name.localeCompare(b.name))
-    },
-    enabled: !!selectedCityCode
-  })
+  const { data: districts, isLoading: loadingDistricts } = useDistricts(selectedCityCode)
 
   const { items: cart, clearItems: clearCart } = useCartStore()
   const [paymentMethod, setPaymentMethod] = useState('cod')
