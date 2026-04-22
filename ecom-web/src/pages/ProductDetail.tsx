@@ -6,6 +6,7 @@ import 'swiper/css'
 import 'swiper/css/navigation'
 import { ChevronRight } from 'lucide-react'
 import { Breadcrumb } from 'antd'
+import { useTranslation } from 'react-i18next'
 
 import { MOCK_PRODUCTS } from '../data/mockData'
 import ProductCard from '../components/ProductCard'
@@ -15,9 +16,11 @@ import ProductSpecsList from '../features/product/components/ProductSpecsList'
 import ProductActions from '../features/product/components/ProductActions'
 import ProductTrustBox from '../features/product/components/ProductTrustBox'
 import ProductTabs from '../features/product/components/ProductTabs'
+import { usePageMeta } from '~/hooks/usePageMeta'
 
 export default function ProductDetail() {
   const { id } = useParams<{ id: string }>()
+  const { t } = useTranslation()
 
   // In a real app we would use react-query `useQuery` here
   const product = useMemo(() => {
@@ -27,6 +30,11 @@ export default function ProductDetail() {
   }, [id])
 
   const [quantity, setQuantity] = useState(1)
+
+  usePageMeta({
+    title: t('seo.productDetailTitle', { name: product.name }),
+    description: product.name
+  })
 
   // Demo active image
   const activeImage = product.image
@@ -46,8 +54,8 @@ export default function ProductDetail() {
         <Breadcrumb
           separator="›"
           items={[
-            { title: <Link to='/' className='hover:text-[#0b5edd] transition-colors'>Trang chủ</Link> },
-            { title: <span className='text-gray-800 font-medium uppercase'>{product.category === 'pc' ? 'PC - Máy tính' : 'Sản phẩm'}</span> },
+            { title: <Link to='/' className='hover:text-[#0b5edd] transition-colors'>{t('product.home')}</Link> },
+            { title: <span className='text-gray-800 font-medium uppercase'>{product.category === 'pc' ? t('product.pcCategory') : t('product.productCategory')}</span> },
             { title: <span className='text-gray-800 font-medium line-clamp-1 max-w-[200px] md:max-w-none'>{product.name}</span> }
           ]}
         />
@@ -79,7 +87,7 @@ export default function ProductDetail() {
               <div>
                 <span className='font-bold text-gray-800'>Khách hàng Lương Tiến Đạt (097 478 xxxx)</span>
               </div>
-              <div className='text-gray-500'>Đã mua hàng 30 phút trước</div>
+              <div className='text-gray-500'>{t('product.recentBuyer')}</div>
             </div>
           </div>
         </div>
@@ -87,7 +95,7 @@ export default function ProductDetail() {
 
       {/* Similar Products Row */}
       <div className='bg-white rounded-lg shadow-sm border border-gray-100 p-4 md:p-6 overflow-hidden'>
-        <h2 className='uppercase text-[20px] font-bold text-gray-800 mb-5'>Sản phẩm tương tự</h2>
+        <h2 className='uppercase text-[20px] font-bold text-gray-800 mb-5'>{t('product.similarProducts')}</h2>
         <div className='w-full relative -mx-2 px-2'>
           <Swiper
             modules={[Navigation]}

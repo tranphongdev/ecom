@@ -6,9 +6,11 @@ import {
   Camera, Wrench, Headphones, Mouse, Keyboard, Square, Mic, Radio, Briefcase, 
   Layers, Activity 
 } from 'lucide-react'
+import { useTranslation } from 'react-i18next'
 import ProductCard, { ProductCardSkeleton } from '~/components/ProductCard'
 import { Link, useParams } from 'react-router-dom'
 import { MOCK_PRODUCTS } from '~/data/mockData'
+import { usePageMeta } from '~/hooks/usePageMeta'
 
 // Constants
 const FILTER_CRITERIA = [
@@ -104,6 +106,12 @@ const CATEGORY_MAP: Record<string, { title: string, filters: FilterItem[] }> = {
 export default function ProductList() {
   const { category } = useParams<{ category: string }>()
   const currentCategory = category && CATEGORY_MAP[category] ? CATEGORY_MAP[category] : CATEGORY_MAP['laptop']
+  const { t } = useTranslation()
+  
+  usePageMeta({
+    title: t('seo.productListTitle', { category: currentCategory.title }),
+    description: currentCategory.title
+  })
   
   const [isLoading, setIsLoading] = useState(true)
   const [products, setProducts] = useState(MOCK_PRODUCTS)
@@ -191,7 +199,7 @@ export default function ProductList() {
       {/* Filter Options block giống nguyencongpc */}
       <div className='bg-white p-5 rounded-lg shadow-sm border border-gray-100 mb-4'>
         <div className='flex flex-col xl:flex-row items-start gap-4'>
-          <span className='font-bold text-gray-800 whitespace-nowrap pt-1'>Chọn theo tiêu chí:</span>
+          <span className='font-bold text-gray-800 whitespace-nowrap pt-1'>{t('productList.filterBy')}</span>
           <div className='flex flex-wrap gap-3 flex-1'>
             {FILTER_CRITERIA.map((item, idx) => (
               <Select
@@ -216,7 +224,7 @@ export default function ProductList() {
                 : 'border-gray-200 text-gray-700 hover:border-gray-300'
             } flex items-center gap-1.5 transition whitespace-nowrap`}
           >
-            <TrendingUp size={16} /> Giá tăng dần
+            <TrendingUp size={16} /> {t('productList.priceAsc')}
           </button>
           <button
             onClick={() => handleSortChange('price_desc')}
@@ -226,13 +234,13 @@ export default function ProductList() {
                 : 'border-gray-200 text-gray-700 hover:border-gray-300'
             } flex items-center gap-1.5 transition whitespace-nowrap`}
           >
-            <TrendingDown size={16} /> Giá giảm dần
+            <TrendingDown size={16} /> {t('productList.priceDesc')}
           </button>
           <button className='px-3 py-1.5 rounded text-[13px] border border-gray-200 text-gray-700 hover:border-gray-300 flex items-center gap-1.5 transition whitespace-nowrap sm:flex'>
-            <MessageCircle size={16} /> Trao đổi
+            <MessageCircle size={16} /> {t('productList.discuss')}
           </button>
           <button className='px-3 py-1.5 rounded text-[13px] border border-gray-200 text-gray-700 hover:border-gray-300 flex items-center gap-1.5 transition whitespace-nowrap sm:flex'>
-            <Star size={16} /> Đánh giá
+            <Star size={16} /> {t('productList.rating')}
           </button>
           <button className='px-3 py-1.5 rounded text-[13px] border border-gray-200 text-gray-700 hover:border-gray-300 flex items-center transition whitespace-nowrap'>
             Tên A&rarr;Z
@@ -260,7 +268,7 @@ export default function ProductList() {
 
           {!isLoading && products.length === 0 && (
             <div className='col-span-full py-20 text-center text-gray-500 font-medium'>
-              Không có sản phẩm nào phù hợp với bộ lọc hiện tại.
+              {t('productList.noProducts')}
             </div>
           )}
         </div>

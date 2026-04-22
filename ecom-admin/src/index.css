@@ -1,0 +1,35 @@
+@import url('https://fonts.googleapis.com/css2?family=Cascadia+Code:ital,wght@0,200..700;1,200..700&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+}
+
+body {
+  @apply text-slate-900 bg-slate-50;
+  font-family: var(--font-sans);
+}
+
+/* Ant Design Overrides to match the design */
+.ant-table {
+  border-radius: 0 !important;
+}
+
+.ant-table-wrapper .ant-table-thead > tr > th {
+  font-weight: 600 !important;
+  text-transform: uppercase !important;
+  font-size: 11px !important;
+  letter-spacing: 0.05em !important;
+}
+
+.ant-pagination-item-active {
+  border-color: #4f46e5 !important;
+}
+
+.ant-pagination-item-active a {
+  color: #4f46e5 !important;
+}
+
+.ant-btn-primary {
+  box-shadow: 0 10px 15px -3px rgba(79, 70, 229, 0.1) !important;
+}

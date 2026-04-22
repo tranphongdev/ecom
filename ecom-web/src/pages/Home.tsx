@@ -6,12 +6,20 @@ import 'swiper/css'
 import 'swiper/css/navigation'
 import { Zap } from 'lucide-react'
 import Countdown from 'react-countdown'
+import { useTranslation } from 'react-i18next'
 import { MOCK_PRODUCTS } from '~/data/mockData'
 import ProductCard, { ProductCardSkeleton } from '~/components/ProductCard'
 import HomeHero from '~/components/home/HomeHero'
+import { usePageMeta } from '~/hooks/usePageMeta'
 
 export default function Home() {
+  const { t } = useTranslation()
   const [isLoading, setIsLoading] = useState(true)
+
+  usePageMeta({
+    title: t('seo.homeTitle'),
+    description: t('seo.homeDesc')
+  })
 
   // Countdown target logic (e.g. 1 day, 13 hours, 50 mins from now)
   const [targetDate] = useState(() => Date.now() + 1 * 24 * 60 * 60 * 1000 + 13 * 60 * 60 * 1000 + 50 * 60 * 1000)
@@ -37,7 +45,7 @@ export default function Home() {
     seconds: number
     completed: boolean
   }) => {
-    if (completed) return <span className='font-bold text-white text-[14px]'>Đã kết thúc</span>
+    if (completed) return <span className='font-bold text-white text-[14px]'>{t('home.ended')}</span>
     const formatNum = (num: number) => num.toString().padStart(2, '0')
     return (
       <div className='flex gap-1.5 text-xs font-black text-[#e41820] items-center'>
@@ -87,12 +95,12 @@ export default function Home() {
             <div className='flex items-center gap-2'>
               <Zap size={30} className='text-yellow-400 fill-yellow-400' />
               <h2 className='text-[20px] md:text-2xl font-black text-yellow-400 uppercase tracking-wide leading-none'>
-                GIÁ TỐT MỖI NGÀY
+                {t('home.dailyDeal')}
               </h2>
             </div>
 
             <div className='flex items-center gap-2 md:gap-3 text-white ml-0 md:ml-6 mt-2 md:mt-0'>
-              <span className='font-bold text-[14px]'>Kết thúc sau</span>
+              <span className='font-bold text-[14px]'>{t('home.endsIn')}</span>
               <Countdown date={targetDate} renderer={countdownRenderer} />
             </div>
 
@@ -101,7 +109,7 @@ export default function Home() {
                 to='/flash-sale'
                 className='text-white text-[13px] font-medium flex items-center hover:text-yellow-300 transition-colors'
               >
-                Xem thêm khuyến mãi <span className='ml-1 text-[10px] mt-1'>▶</span>
+                {t('home.moreDeals')} <span className='ml-1 text-[10px] mt-1'>▶</span>
               </Link>
             </div>
           </div>
@@ -139,12 +147,12 @@ export default function Home() {
       {/* Laptop Section */}
       <section className='bg-white rounded-lg shadow-sm border border-gray-100 relative'>
         <div className='px-6 py-4 flex items-center justify-between border-b border-gray-100 bg-[#0b5edd] rounded-t-lg text-white'>
-          <h2 className='text-xl font-bold uppercase tracking-wide'>Laptop Bán Chạy</h2>
+          <h2 className='text-xl font-bold uppercase tracking-wide'>{t('home.bestLaptops')}</h2>
           <Link
             to='/products?category=laptop'
             className='text-sm font-semibold hover:text-yellow-300 transition-colors'
           >
-            Xem tất cả →
+            {t('home.viewAll')}
           </Link>
         </div>
         <div className='p-2 md:p-4'>
@@ -161,9 +169,9 @@ export default function Home() {
       {/* PC Section */}
       <section className='bg-white rounded-lg shadow-sm border border-gray-100 relative'>
         <div className='px-6 py-4 flex items-center justify-between border-b border-gray-100 bg-[#1777d1] rounded-t-lg text-white'>
-          <h2 className='text-xl font-bold uppercase tracking-wide'>PC Xây Dựng Cấu Hình</h2>
+          <h2 className='text-xl font-bold uppercase tracking-wide'>{t('home.pcBuild')}</h2>
           <Link to='/products?category=pc' className='text-sm font-semibold hover:text-yellow-300 transition-colors'>
-            Xem tất cả →
+            {t('home.viewAll')}
           </Link>
         </div>
         <div className='p-2 md:p-4'>

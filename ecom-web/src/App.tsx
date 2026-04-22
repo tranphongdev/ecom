@@ -18,6 +18,7 @@ import ProductList from './pages/ProductList'
 import ProductDetail from './pages/ProductDetail'
 import Cart from './pages/Cart'
 import Checkout from './pages/Checkout'
+import NotFound from './pages/NotFound'
 import ScrollToTop from './components/common/ScrollToTop'
 import PromoBanner from './components/common/PromoBanner'
 import themeConfig from './theme/themeConfig'
@@ -46,6 +47,7 @@ function App() {
               <Route path=':category' element={<ProductList />} />
               <Route path='products' element={<ProductList />} />
             </Route>
+            <Route path='*' element={<NotFound />} />
           </Routes>
         </Router>
       </ConfigProvider>

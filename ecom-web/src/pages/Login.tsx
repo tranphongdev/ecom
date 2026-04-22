@@ -2,13 +2,21 @@ import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { Button, Input, Form, message } from 'antd'
 import { User, Lock, ArrowLeft } from 'lucide-react'
+import { useTranslation } from 'react-i18next'
 import { useAuthStore } from '~/store'
+import { usePageMeta } from '~/hooks/usePageMeta'
 import type { UserProfile } from '~/types'
 
 export default function Login() {
   const navigate = useNavigate()
+  const { t } = useTranslation()
   const [loading, setLoading] = useState(false)
   const login = useAuthStore((state) => state.login)
+
+  usePageMeta({
+    title: t('seo.loginTitle'),
+    description: t('auth.loginSubtitle')
+  })
 
   const onFinish = (values: UserProfile) => {
     setLoading(true)
@@ -19,7 +27,7 @@ export default function Login() {
         email: values.email || 'phongtd.bhsoft@gmail.com',
         role: 'Khách hàng'
       })
-      message.success('Đăng nhập thành công!')
+      message.success(t('auth.loginSuccess'))
       navigate('/dashboard')
     }, 1000)
   }
@@ -34,27 +42,27 @@ export default function Login() {
           className='flex items-center gap-2 justify-center mb-6 text-white hover:text-red-400 transition-colors'
         >
           <ArrowLeft size={20} />
-          <span className='font-semibold'>Quay lại trang chủ</span>
+          <span className='font-semibold'>{t('auth.backToHome')}</span>
         </Link>
         <div className='bg-white py-8 px-4 shadow-2xl sm:rounded-xl sm:px-10 border-t-4 border-primary'>
           <div className='mb-8 text-center'>
-            <h2 className='text-3xl font-black text-gray-900 tracking-tight uppercase'>Đăng Nhập</h2>
-            <p className='mt-2 text-sm text-gray-600'>Đăng nhập tài khoản TranPhongPC để nhận nhiều ưu đãi</p>
+            <h2 className='text-3xl font-black text-gray-900 tracking-tight uppercase'>{t('auth.loginTitle')}</h2>
+            <p className='mt-2 text-sm text-gray-600'>{t('auth.loginSubtitle')}</p>
           </div>
 
           <Form name='login' onFinish={onFinish} layout='vertical' size='large'>
-            <Form.Item name='email' rules={[{ required: true, message: 'Vui lòng nhập Email!' }]}>
+            <Form.Item name='email' rules={[{ required: true, message: t('auth.emailReq') }]}>
               <Input
                 prefix={<User className='text-gray-400' size={18} />}
-                placeholder='Email hoặc Số điện thoại'
+                placeholder={t('auth.emailPlaceholder')}
                 className='rounded-lg h-12 text-sm'
               />
             </Form.Item>
 
-            <Form.Item name='password' rules={[{ required: true, message: 'Vui lòng nhập Mật khẩu!' }]}>
+            <Form.Item name='password' rules={[{ required: true, message: t('auth.passwordReq') }]}>
               <Input.Password
                 prefix={<Lock className='text-gray-400' size={18} />}
-                placeholder='Mật khẩu'
+                placeholder={t('auth.passwordPlaceholder')}
                 className='rounded-lg h-12 text-sm'
               />
             </Form.Item>
@@ -68,12 +76,12 @@ export default function Login() {
                   className='h-4 w-4 text-primary focus:ring-primary border-gray-300 rounded'
                 />
                 <label htmlFor='remember-me' className='ml-2 block text-sm text-gray-900 font-medium'>
-                  Ghi nhớ
+                  {t('auth.remember')}
                 </label>
               </div>
               <div className='text-sm'>
                 <a href='#' className='font-semibold text-primary hover:text-red-700'>
-                  Quên mật khẩu?
+                  {t('auth.forgotPassword')}
                 </a>
               </div>
             </div>
@@ -85,7 +93,7 @@ export default function Login() {
                 loading={loading}
                 className='w-full h-12 text-sm'
               >
-                Đăng Nhập
+                {t('auth.loginBtn')}
               </Button>
             </Form.Item>
           </Form>
@@ -96,7 +104,7 @@ export default function Login() {
                 <div className='w-full border-t border-gray-300' />
               </div>
               <div className='relative flex justify-center text-sm'>
-                <span className='px-2 bg-white text-gray-500'>Hoặc tiếp tục với</span>
+                <span className='px-2 bg-white text-gray-500'>{t('auth.orContinueWith')}</span>
               </div>
             </div>
 
@@ -111,9 +119,9 @@ export default function Login() {
           </div>
 
           <div className='mt-8 text-center text-sm font-medium'>
-            <span className='text-gray-600'>Bạn chưa có tài khoản? </span>
+            <span className='text-gray-600'>{t('auth.noAccount')} </span>
             <Link to='/register' className='text-primary hover:text-red-700 font-bold'>
-              Đăng ký ngay
+              {t('auth.registerNow')}
             </Link>
           </div>
         </div>

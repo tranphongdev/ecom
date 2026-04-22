@@ -3,31 +3,37 @@ import { Breadcrumb, Form, Input, Select, message, Table, Tag, Button, Tabs } fr
 import { User, FileText, Lock, LogOut } from 'lucide-react'
 import { useAuthStore } from '~/store'
 import { useTranslation } from 'react-i18next'
+import { usePageMeta } from '~/hooks/usePageMeta'
 
 export default function Dashboard() {
   const navigate = useNavigate()
   const { user, logout } = useAuthStore()
   const { t, i18n } = useTranslation()
 
+  usePageMeta({
+    title: t('seo.dashboardTitle'),
+    description: t('profile.updateInfo')
+  })
+
   const handleLogout = (e: React.MouseEvent) => {
     e.preventDefault()
     logout()
-    message.info(t('profile.logout') || 'Bạn đã đăng xuất tài khoản.')
+    message.info(t('dashboard.logoutMsg'))
     navigate('/')
   }
 
   // Fake Order Data
   const orderColumns = [
     {
-      title: 'Mã Đơn Hàng',
+      title: t('dashboard.orderCode'),
       dataIndex: 'id',
       key: 'id',
       render: (text: string) => <a className='font-bold text-[#0b5edd]'>#{text}</a>
     },
-    { title: 'Ngày Đặt', dataIndex: 'date', key: 'date' },
-    { title: 'Tổng Tiền', dataIndex: 'total', key: 'total', render: (text: string) => <b>{text}</b> },
+    { title: t('dashboard.orderDate'), dataIndex: 'date', key: 'date' },
+    { title: t('dashboard.orderTotal'), dataIndex: 'total', key: 'total', render: (text: string) => <b>{text}</b> },
     {
-      title: 'Trạng Thái',
+      title: t('dashboard.orderStatus'),
       dataIndex: 'status',
       key: 'status',
       render: (status: string) => {
@@ -151,7 +157,7 @@ export default function Dashboard() {
       ),
       children: (
         <div className='md:pl-10 md:pt-2 w-full'>
-          <h2 className='text-[22px] font-bold text-gray-800 mb-8'>Quản lý đơn hàng</h2>
+          <h2 className='text-[22px] font-bold text-gray-800 mb-8'>{t('dashboard.manageOrders')}</h2>
           <div className='overflow-x-auto max-w-[900px]'>
             <Table
               columns={orderColumns}
@@ -174,20 +180,20 @@ export default function Dashboard() {
       ),
       children: (
         <div className='md:pl-10 md:pt-2 w-full'>
-          <h2 className='text-[22px] font-bold text-gray-800 mb-8'>Thay đổi mật khẩu</h2>
+          <h2 className='text-[22px] font-bold text-gray-800 mb-8'>{t('dashboard.changePassword')}</h2>
           <Form layout='vertical' size='large' className='custom-account-form max-w-[500px]'>
-            <Form.Item label='Mật khẩu cũ'>
-              <Input.Password placeholder='Nhập mật khẩu hiện tại' />
+            <Form.Item label={t('dashboard.oldPassword')}>
+              <Input.Password placeholder={t('dashboard.oldPasswordPh')} />
             </Form.Item>
-            <Form.Item label='Mật khẩu mới'>
-              <Input.Password placeholder='Nhập mật khẩu mới' />
+            <Form.Item label={t('dashboard.newPassword')}>
+              <Input.Password placeholder={t('dashboard.newPasswordPh')} />
             </Form.Item>
-            <Form.Item label='Xác nhận mật khẩu'>
-              <Input.Password placeholder='Nhập lại mật khẩu mới' />
+            <Form.Item label={t('dashboard.confirmPassword')}>
+              <Input.Password placeholder={t('dashboard.confirmPasswordPh')} />
             </Form.Item>
             <Form.Item className='mt-4'>
               <Button type='primary' className='font-medium px-8'>
-                LƯU MẬT KHẨU
+                {t('dashboard.savePassword')}
               </Button>
             </Form.Item>
           </Form>
@@ -201,7 +207,7 @@ export default function Dashboard() {
       <div className='text-[13px] text-gray-500 mb-6'>
         <Breadcrumb
           items={[
-            { title: <Link to='/'>Trang chủ</Link> },
+            { title: <Link to='/'>{t('product.home')}</Link> },
             { title: <span className='text-gray-800'>{t('profile.title')}</span> }
           ]}
         />

@@ -1,18 +1,26 @@
 import { Link } from 'react-router-dom'
 import { Empty, message, Button } from 'antd'
 import { Trash2, ChevronLeft } from 'lucide-react'
+import { useTranslation } from 'react-i18next'
 import { useCartStore } from '~/store'
+import { usePageMeta } from '~/hooks/usePageMeta'
 
 export default function Cart() {
+  const { t } = useTranslation()
   const { items: cart, updateItemQuantity: updateQuantity, removeItem: removeFromCart, clearItems: clearCart } = useCartStore()
+
+  usePageMeta({
+    title: t('seo.cartTitle'),
+    description: t('cart.title')
+  })
 
   if (cart.length === 0) {
     return (
       <div className='max-w-[700px] mx-auto py-12 flex flex-col items-center justify-center bg-white rounded-lg shadow-sm border border-gray-100 min-h-[50vh] mt-6'>
-        <Empty description='Không có sản phẩm nào trong giỏ hàng của bạn.' image={Empty.PRESENTED_IMAGE_SIMPLE} />
+        <Empty description={t('cart.empty')} image={Empty.PRESENTED_IMAGE_SIMPLE} />
         <Link to='/' className='mt-6'>
           <Button type='primary' size='large'>
-            TIẾP TỤC MUA SẮM
+            {t('cart.continueShopping')}
           </Button>
         </Link>
       </div>
@@ -23,9 +31,9 @@ export default function Cart() {
     <div className='max-w-[800px] mx-auto bg-white rounded-md shadow-sm border border-gray-200 mt-6 mb-12'>
       {/* Header */}
       <div className='flex justify-between items-center px-4 md:px-6 py-4 border-b border-gray-200 bg-gray-50/50 rounded-t-md'>
-        <h1 className='text-[17px] font-bold text-gray-800 m-0'>Giỏ hàng của bạn</h1>
+        <h1 className='text-[17px] font-bold text-gray-800 m-0'>{t('cart.title')}</h1>
         <Link to='/' className='text-[14px] text-gray-700 hover:text-[#0b5edd] flex items-center font-medium'>
-          <ChevronLeft size={16} className='mr-1' /> Mua thêm sản phẩm khác
+          <ChevronLeft size={16} className='mr-1' /> {t('cart.buyMore')}
         </Link>
       </div>
 
@@ -35,11 +43,11 @@ export default function Cart() {
           <button
             onClick={() => {
               clearCart()
-              message.success('Đã xóa tất cả trong giỏ hàng')
+              message.success(t('cart.cleared'))
             }}
             className='px-4 py-1.5 border border-gray-300 text-gray-700 text-[13px] rounded hover:bg-gray-50 transition-colors'
           >
-            Xóa giỏ hàng
+            {t('cart.clearCart')}
           </button>
         </div>
 
@@ -67,8 +75,8 @@ export default function Cart() {
                   {item.name}
                 </Link>
                 <div className='mt-1'>
-                  <span className='text-[#ed1b24] text-[13px] font-medium mr-1'>Khuyến mại</span>
-                  <span className='text-[#0b5edd] text-[13px] hover:underline cursor-pointer'>(Chi tiết) ▼</span>
+                  <span className='text-[#ed1b24] text-[13px] font-medium mr-1'>{t('cart.promotion')}</span>
+                  <span className='text-[#0b5edd] text-[13px] hover:underline cursor-pointer'>{t('cart.details')}</span>
                 </div>
               </div>
 

@@ -1,0 +1,10 @@
+{
+  "name": "E-commerce Admin Pro",
+  "description": "A modern, professional e-commerce admin dashboard with advanced analytics, product management, and order tracking.",
+  "requestFramePermissions": [
+    "camera",
+    "microphone",
+    "geolocation"
+  ],
+  "majorCapabilities": []
+}
