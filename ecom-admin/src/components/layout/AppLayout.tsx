@@ -9,12 +9,12 @@ export const AppLayout: React.FC = () => {
   const location = useLocation();
 
   return (
-    <div className="flex min-h-screen bg-slate-50 font-sans selection:bg-indigo-100 selection:text-indigo-900">
+    <div className="flex h-screen bg-slate-50 font-sans selection:bg-indigo-100 selection:text-indigo-900 overflow-hidden">
       <ScrollToTop />
       <Sidebar />
-      <div className="flex-1 flex flex-col min-w-0">
+      <div className="flex-1 flex flex-col min-w-0 h-screen overflow-hidden">
         <Topbar />
-        <main className="flex-1">
+        <main className="flex-1 overflow-y-scroll overflow-x-hidden relative" id="main-content">
           <AnimatePresence mode="wait">
             <motion.div
               key={location.pathname}
